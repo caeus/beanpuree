@@ -56,10 +56,10 @@ class BeanLabellingMacros(val c: whitebox.Context) extends SingletonTypeUtils wi
     val labelsValue = mkHListValue(labelValues)
 
     q"""
-       new _root_.me.limansky.beanpuree.BeanLabelling[$tpe] {
+       new _root_.com.github.caeus.beanpuree.BeanLabelling[$tpe] {
          override type Out = $labelsType
          def apply(): $labelsType = $labelsValue
-       }: _root_.me.limansky.beanpuree.BeanLabelling.Aux[$tpe, $labelsType]
+       }: _root_.com.github.caeus.beanpuree.BeanLabelling.Aux[$tpe, $labelsType]
      """
   }
 }

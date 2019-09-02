@@ -1,7 +1,8 @@
 package com.github.caeus.beanpuree;
 
 
-public class Child extends Base {
+public class Child  {
+    public Child(){}
     private String bu;
 
     public String getBu() {

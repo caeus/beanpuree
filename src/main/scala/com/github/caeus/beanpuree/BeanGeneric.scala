@@ -16,12 +16,11 @@
 
 package com.github.caeus.beanpuree
 
+import com.github.caeus.beanpuree.VersionSpecific._
 import shapeless.CaseClassMacros
 
 import scala.language.experimental.macros
 import scala.reflect.macros.whitebox
-
-import VersionSpecific._
 
 /**
   * Represents an ability to convert bean of type B to generic representation ([[shapeless.HList]]).
@@ -75,7 +74,7 @@ object BeanGeneric {
     * @tparam B bean type
     * @tparam R generic representation type
     */
-  type Aux[B, R] = BeanGeneric[B] { type Repr = R }
+  type Aux[B, R] = BeanGeneric[B] {type Repr = R}
 
   /**
     * Provides a [[BeanGeneric]] instance for type {B} if possible.
@@ -87,6 +86,7 @@ object BeanGeneric {
 
 @macrocompat.bundle
 class BeanGenericMacros(val c: whitebox.Context) extends CaseClassMacros with BeanUtils {
+
   import c.universe._
 
   def materialize[B: WeakTypeTag, R: WeakTypeTag]: Tree = {
@@ -104,11 +104,12 @@ class BeanGenericMacros(val c: whitebox.Context) extends CaseClassMacros with Be
     val from = cq" $rp => ${ctorDtor.construct(rts)} "
 
     q"""
-      new _root_.me.limansky.beanpuree.BeanGeneric[$tpe] {
+      new _root_.com.github.caeus.beanpuree.BeanGeneric[$tpe] {
         override type Repr = $rtpe
         override def to($b: $tpe): Repr = $to
         override def from(r: Repr): $tpe = r match { case $from }
-      }: _root_.me.limansky.beanpuree.BeanGeneric.Aux[$tpe, $rtpe]
+      }: _root_.com.github.caeus.beanpuree.BeanGeneric.Aux[$tpe, $rtpe]
     """
+
   }
 }
