@@ -86,7 +86,7 @@ trait BeanUtils { self: CaseClassMacros =>
   }
 
   def beanFields(tpe: Type): List[Field] = {
-    val methods = tpe.decls.toList collect {
+    val methods = tpe.members.toList collect {
       case sym: MethodSymbol if sym.isMethod && sym.isPublic => sym
     }
 
